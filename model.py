@@ -1,5 +1,4 @@
-from flask_sqlalchemy import SQLALchemy
-from app import db
+from config import db
 
 class Agents(db.Model):
     __tablename__ = 'agents'
@@ -23,7 +22,7 @@ class Listings(db.Model):
     __tablename__ = 'listings'
     _id = db.Column(db.Integer, primary_key=True)
     street_address = db.Column(db.String )
-    city = db.Column.(db.String)
+    city = db.Column(db.String)
     state = db.Column(db.String)
     price = db.Column(db.Integer)
     square_ft = db.Column(db.Integer)
