@@ -70,3 +70,5 @@ def filter_all_listings(token):
         listings1.append(listing)
 
     return listings1
+
+print("hi")
