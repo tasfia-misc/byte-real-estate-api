@@ -20,7 +20,7 @@ class Agents(db.Model):
         self.email = eMail
         self.phone_number = phone
         self.company = com
-        self.api_token = uuid4().hex
+        self.api_token = uuid4()
 
 class Listings(db.Model):
     __tablename__ = 'listings'
