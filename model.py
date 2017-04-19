@@ -20,11 +20,7 @@ class Agents(db.Model):
         self.email = eMail
         self.phone_number = phone
         self.company = com
-<<<<<<< HEAD
-        self.api_token = uuid4()
-=======
         self.token = uuid4().hex
->>>>>>> db72148d32389f44b93e7e1da275ccd0982aa87d
 
 class Listings(db.Model):
     __tablename__ = 'listings'
