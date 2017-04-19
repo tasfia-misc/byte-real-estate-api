@@ -57,16 +57,78 @@ class Listings(db.Model):
         self.agent_token = agent_token
 
 def filter_all_listings(token):
-    listings1 = []
+    all_listings = []
     results = Listings.query.filter_by(agent_token=token).all()
 
     for result in results:
         listing = {
             "Address": "{}, {}, {}, {}".format(result.street_address, result.city, result.state, result.zip_code),
             "Bedrooms": result.num_of_bedrooms,
+            "Bath": result.num_of_bathrooms,
             "Availablity": result.available_or_sold,
             "Price": result.price
         }
-        listings1.append(listing)
+        all_listings.append(listing)
 
-    return listings1
+    return all_listings
+
+def filter_city_listings(token,city):
+    all_listings = []
+    results = Listings.query.filter_by(city = city, agent_token = token)
+    for result in results:
+        listing = {
+            "Address": "{}, {}, {}, {}".format(result.street_address, result.city, result.state, result.zip_code),
+            "Bedrooms": result.num_of_bedrooms,
+            "Bath": result.num_of_bathrooms,
+            "Availablity": result.available_or_sold,
+            "Price": result.price        
+        }
+        all_listings.append(listing)
+
+    return all_listings
+
+def filter_state_listings(token,state):
+    all_listings = []
+    results = Listings.query.filter_by(state = state, agent_token = token)
+    for result in results:
+        listing = {
+            "Address": "{}, {}, {}, {}".format(result.street_address, result.city, result.state, result.zip_code),
+            "Bedrooms": result.num_of_bedrooms,
+            "Bath": result.num_of_bathrooms,
+            "Availablity": result.available_or_sold,
+            "Price": result.price        
+        }
+        all_listings.append(listing)
+
+    return all_listings
+
+def filter_bedroom_listings(token, bedroom_num):
+    all_listings = []
+    results = Listings.query.filter_by(num_of_bedrooms = bedroom_num, agent_token = token)
+    for result in results:
+        listing = {
+            "Address": "{}, {}, {}, {}".format(result.street_address, result.city, result.state, result.zip_code),
+            "Bedrooms": result.num_of_bedrooms,
+            "Bath": result.num_of_bathrooms,
+            "Availablity": result.available_or_sold,
+            "Price": result.price        
+        }
+        all_listings.append(listing)
+
+    return all_listings
+
+def filter_bathroom_listings(token, bathroom_num):
+    all_listings = []
+    results = Listings.query.filter_by(num_of_bathrooms = bathroom_num, agent_token = token)
+    for result in results:
+        listing = {
+            "Address": "{}, {}, {}, {}".format(result.street_address, result.city, result.state, result.zip_code),
+            "Bedrooms": result.num_of_bedrooms,
+            "Bath": result.num_of_bathrooms,
+            "Availablity": result.available_or_sold,
+            "Price": result.price        
+        }
+        all_listings.append(listing)
+
+    return all_listings
+
