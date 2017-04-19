@@ -1,59 +1,54 @@
-# from flask import Flask,  render_template, request
-# from flask_sqlalchemy import SQLAlchemy
 
-
-# app = Flask(__name__)
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////realty_api.db'
-
-# app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
-# db = SQLAlchemy(app)
 from flask import render_template, request, jsonify
 from config import db, app
 from model import *
 
-token = ""
-
-# ///pushin what i did do far///
-@app.route('/token')
-def agent_listings():
-	token = request.args.get('token')
+@app.route('/<token>')
+def agent_listings(token):
 	agent_listings = filter_all_listings(token)
 	return jsonify(
 		listings = agent_listings
 	)
 
-@app.route('/city')
-def city_search():
-	city = request.args.get('city')
-	Listings.query.filter_by(city = city)
-	return city
+@app.route('/<token>/city=<city>')
+def city_search(token, city):
+	city_results = filter_city_listings(token,city)	
+	return jsonify(
+		listings = city_results
+	)
 
-@app.route('/state')
-def state_search():
-	state = request.args.get('state')
-	return state
+@app.route('/<token>/state=<state>')
+def state_search(token, state):
+	state_results = filter_state_listings(token,state)	
+	return jsonify(
+		listings = state_results
+	)
+########################################	
+# holding off on price cux its annoying
+# @app.route('/token/price')
+# def price_search():
+# 	price = request.args.get('price')
+# 	return price
 
-@app.route('/price')
-def price_search():
-	price = request.args.get('price')
-	return price
+# @app.route('/sqft')
+# def sqft_search():
+# 	sqft = request.args.get('sqft')
+# 	return sqft
+#########################################
 
-@app.route('/sqft')
-def sqft_search():
-	sqft = request.args.get('sqft')
-	return sqft
+@app.route('/<token>/bed=<bedroom_num>')
+def bedroom_num_search(token,bedroom_num):
+	bedroom_results = filter_bedroom_listings(token, bedroom_num)
+	return jsonify(
+		listing = bedroom_results
+	)
 
-@app.route('/bedroom_num')
-def bedroom_num_search():
-	bedroom = request.args.get('bedroom_num')
-	return bedroom_num
-
-@app.route('/bathroom_num')
-def bathroom_num_search():
-	bathroom = request.args.get('bathroom_num')
-	return bathroom_num
-
+@app.route('/<token>/bath=<bathroom_num>')
+def bathroom_num_search(token,bathroom_num):
+	bathroom_results = filter_bathroom_listings(token, bathroom_num)
+	return jsonify(
+		listing = bathroom_results
+	)
 @app.route('/amenities')
 def amenities_num_search():
 	amenities_search = request.args.get('amenities')
