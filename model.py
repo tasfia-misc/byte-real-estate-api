@@ -1,3 +1,4 @@
+from flask import jsonify
 from config import db
 from uuid import uuid4
 
@@ -9,9 +10,8 @@ class Agents(db.Model):
     email = db.Column(db.String)
     phone_number = db.Column(db.String(11))
     company = db.Column(db.String)
-    api_token = db.Column(db.String)
-    listings = db.relationship('Listings', backref='agents',
-                                lazy='dynamic')
+    token = db.Column(db.String)
+    listings = db.relationship('Listings', backref='agents', lazy='dynamic')
 
 
     def __init__(self, first, last, eMail, phone, com):
@@ -20,7 +20,11 @@ class Agents(db.Model):
         self.email = eMail
         self.phone_number = phone
         self.company = com
+<<<<<<< HEAD
         self.api_token = uuid4()
+=======
+        self.token = uuid4().hex
+>>>>>>> db72148d32389f44b93e7e1da275ccd0982aa87d
 
 class Listings(db.Model):
     __tablename__ = 'listings'
@@ -28,6 +32,7 @@ class Listings(db.Model):
     street_address = db.Column(db.String )
     city = db.Column(db.String)
     state = db.Column(db.String)
+    zip_code = db.Column(db.String)
     price = db.Column(db.Integer)
     square_ft = db.Column(db.Integer)
     num_of_bedrooms = db.Column(db.Integer)
@@ -37,12 +42,13 @@ class Listings(db.Model):
     date_listed = db.Column(db.TIMESTAMP)
     rental_or_sale = db.Column(db.String)
     available_or_sold = db.Column(db.String)
-    agent_token = db.Column(db.Integer, db.ForeignKey('agents.api_token'))
+    agent_token = db.Column(db.Integer, db.ForeignKey('agents.token'))
 
-    def __init__(self, street, c, s, p, sq_ft, beds, baths, amn, des, date, rOs, aOs,agent_token):
+    def __init__(self, street, c, s, zip_, p, sq_ft, beds, baths, amn, des, date, rOs, aOs, agent_token):
         self.street_address = street
         self.city = c
         self.state = s
+        self.zip_code = zip_
         self.price = p
         self.square_ft = sq_ft
         self.num_of_bedrooms = beds
@@ -54,6 +60,17 @@ class Listings(db.Model):
         self.available_or_sold = aOs
         self.agent_token = agent_token
 
+def filter_all_listings(token):
+    listings1 = []
+    results = Listings.query.filter_by(agent_token=token).all()
 
+    for result in results:
+        listing = {
+            "Address": "{}, {}, {}, {}".format(result.street_address, result.city, result.state, result.zip_code),
+            "Bedrooms": result.num_of_bedrooms,
+            "Availablity": result.available_or_sold,
+            "Price": result.price
+        }
+        listings1.append(listing)
 
-
+    return listings1
