@@ -14,15 +14,14 @@ from model import *
 
 token = ""
 
-
 # ///pushin what i did do far///
 @app.route('/token')
 def agent_listings():
 	token = request.args.get('token')
-	agent_listings = Listings.query.filter_by(agent_token = token)
+	agent_listings = filter_all_listings(token)
 	return jsonify(
-		token = agent_listings
-		)
+		listings = agent_listings
+	)
 
 @app.route('/city')
 def city_search():
@@ -43,34 +42,33 @@ def price_search():
 @app.route('/sqft')
 def sqft_search():
 	sqft = request.args.get('sqft')
-	return sqft	
+	return sqft
 
 @app.route('/bedroom_num')
 def bedroom_num_search():
 	bedroom = request.args.get('bedroom_num')
-	return bedroom_num	
+	return bedroom_num
 
 @app.route('/bathroom_num')
 def bathroom_num_search():
 	bathroom = request.args.get('bathroom_num')
-	return bathroom_num	
+	return bathroom_num
 
 @app.route('/amenities')
 def amenities_num_search():
 	amenities_search = request.args.get('amenities')
-	return amenities_search	
+	return amenities_search
 
 #this is to filter by whether the listing is for sale or rent
-@app.route('/type') 
+@app.route('/type')
 def type_search():
 	type = request.args.get('type')
-	return type 
+	return type
 
 @app.route('/availablity')
 def availablity():
 	availablity = request.args.get('availablity')
-	return availablity	
-
+	return availablity
 
 if __name__ == "__main__":
     app.run(debug=True)
