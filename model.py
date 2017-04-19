@@ -9,6 +9,9 @@ class Agents(db.Model):
     phone_number = db.Column(db.String(11))
     company = db.Column(db.String)
     api_token = db.Column(db.String)
+    listings = db.relationship('Listings', backref='agents',
+                                lazy='dynamic')
+
 
     def __init__(self, first, last, eMail, phone, com, token):
         self.first_name = first
@@ -33,8 +36,9 @@ class Listings(db.Model):
     date_listed = db.Column(db.TIMESTAMP)
     rental_or_sale = db.Column(db.String)
     available_or_sold = db.Column(db.String)
+    agent_token = db.Column(db.Integer, db.ForeignKey('agents.api_token'))
 
-    def __init__(self, street, c, s, p, sq_ft, beds, baths, amn, des, date, rOs, aOs):
+    def __init__(self, street, c, s, p, sq_ft, beds, baths, amn, des, date, rOs, aOs,agent_token):
         self.street_address = street
         self.city = c
         self.state = s
@@ -47,3 +51,5 @@ class Listings(db.Model):
         self.date_listed = date
         self.rental_or_sale = rOs
         self.available_or_sold = aOs
+        self.agent_token = agent_token
+
