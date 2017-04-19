@@ -1,5 +1,5 @@
-from flask_sqlalchemy import SQLALchemy
-from app import db
+from config import db
+from uuid import uuid4
 
 class Agents(db.Model):
     __tablename__ = 'agents'
@@ -10,20 +10,23 @@ class Agents(db.Model):
     phone_number = db.Column(db.String(11))
     company = db.Column(db.String)
     api_token = db.Column(db.String)
+    listings = db.relationship('Listings', backref='agents',
+                                lazy='dynamic')
 
-    def __init__(self, first, last, eMail, phone, com, token):
+
+    def __init__(self, first, last, eMail, phone, com):
         self.first_name = first
         self.last_name = last
         self.email = eMail
         self.phone_number = phone
         self.company = com
-        self.api_token = token
+        self.api_token = uuid4().hex
 
 class Listings(db.Model):
     __tablename__ = 'listings'
     _id = db.Column(db.Integer, primary_key=True)
     street_address = db.Column(db.String )
-    city = db.Column.(db.String)
+    city = db.Column(db.String)
     state = db.Column(db.String)
     price = db.Column(db.Integer)
     square_ft = db.Column(db.Integer)
@@ -34,8 +37,9 @@ class Listings(db.Model):
     date_listed = db.Column(db.TIMESTAMP)
     rental_or_sale = db.Column(db.String)
     available_or_sold = db.Column(db.String)
+    agent_token = db.Column(db.Integer, db.ForeignKey('agents.api_token'))
 
-    def __init__(self, street, c, s, p, sq_ft, beds, baths, amn, des, date, rOs, aOs):
+    def __init__(self, street, c, s, p, sq_ft, beds, baths, amn, des, date, rOs, aOs,agent_token):
         self.street_address = street
         self.city = c
         self.state = s
@@ -48,3 +52,8 @@ class Listings(db.Model):
         self.date_listed = date
         self.rental_or_sale = rOs
         self.available_or_sold = aOs
+        self.agent_token = agent_token
+
+
+
+
