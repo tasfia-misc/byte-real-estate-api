@@ -8,20 +8,26 @@
 # app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # db = SQLAlchemy(app)
-
+from flask import render_template, request, jsonify
 from config import db, app
 from model import *
 
 token = ""
 
-@app.route('/')
-def agent_listings(token):
+
+# ///pushin what i did do far///
+@app.route('/token')
+def agent_listings():
 	token = request.args.get('token')
-	return token
+	agent_listings = Listings.query.filter_by(agent_token = token)
+	return jsonify(
+		token = agent_listings
+		)
 
 @app.route('/city')
 def city_search():
 	city = request.args.get('city')
+	Listings.query.filter_by(city = city)
 	return city
 
 @app.route('/state')

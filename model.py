@@ -1,4 +1,5 @@
 from config import db
+from uuid import uuid4
 
 class Agents(db.Model):
     __tablename__ = 'agents'
@@ -13,13 +14,13 @@ class Agents(db.Model):
                                 lazy='dynamic')
 
 
-    def __init__(self, first, last, eMail, phone, com, token):
+    def __init__(self, first, last, eMail, phone, com):
         self.first_name = first
         self.last_name = last
         self.email = eMail
         self.phone_number = phone
         self.company = com
-        self.api_token = token
+        self.api_token = uuid4().hex
 
 class Listings(db.Model):
     __tablename__ = 'listings'
@@ -52,4 +53,7 @@ class Listings(db.Model):
         self.rental_or_sale = rOs
         self.available_or_sold = aOs
         self.agent_token = agent_token
+
+
+
 
