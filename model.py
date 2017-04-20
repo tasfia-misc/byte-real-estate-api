@@ -1,4 +1,3 @@
-from flask import jsonify
 from config import db
 from uuid import uuid4
 
@@ -81,7 +80,7 @@ def filter_city_listings(token,city):
             "Bedrooms": result.num_of_bedrooms,
             "Bath": result.num_of_bathrooms,
             "Availablity": result.available_or_sold,
-            "Price": result.price        
+            "Price": result.price
         }
         all_listings.append(listing)
 
@@ -96,7 +95,7 @@ def filter_state_listings(token,state):
             "Bedrooms": result.num_of_bedrooms,
             "Bath": result.num_of_bathrooms,
             "Availablity": result.available_or_sold,
-            "Price": result.price        
+            "Price": result.price
         }
         all_listings.append(listing)
 
@@ -111,7 +110,7 @@ def filter_bedroom_listings(token, bedroom_num):
             "Bedrooms": result.num_of_bedrooms,
             "Bath": result.num_of_bathrooms,
             "Availablity": result.available_or_sold,
-            "Price": result.price        
+            "Price": result.price
         }
         all_listings.append(listing)
 
@@ -126,9 +125,38 @@ def filter_bathroom_listings(token, bathroom_num):
             "Bedrooms": result.num_of_bedrooms,
             "Bath": result.num_of_bathrooms,
             "Availablity": result.available_or_sold,
-            "Price": result.price        
+            "Price": result.price
         }
         all_listings.append(listing)
 
     return all_listings
 
+def filter_type_listings(token, type_):
+    all_listings = []
+    results = Listings.query.filter_by(rental_or_sale = type_, agent_token = token)
+    for result in results:
+        listing = {
+            "Address": "{}, {}, {}, {}".format(result.street_address, result.city, result.state, result.zip_code),
+            "Bedrooms": result.num_of_bedrooms,
+            "Bath": result.num_of_bathrooms,
+            "Availablity": result.available_or_sold,
+            "Price": result.price
+        }
+        all_listings.append(listing)
+
+    return all_listings
+
+def filter_availability_listings(token, availablity):
+    all_listings = []
+    results = Listings.query.filter_by(available_or_sold = availablity, agent_token = token)
+    for result in results:
+        listing = {
+            "Address": "{}, {}, {}, {}".format(result.street_address, result.city, result.state, result.zip_code),
+            "Bedrooms": result.num_of_bedrooms,
+            "Bath": result.num_of_bathrooms,
+            "Availablity": result.available_or_sold,
+            "Price": result.price
+        }
+        all_listings.append(listing)
+
+    return all_listings
