@@ -2,21 +2,24 @@ from flask import render_template, request, jsonify
 from config import db, app
 from model import *
 
-@app.route('/<token>')
+@app.route('/<token>', methods = ['GET'])
 def agent_listings(token):
-	agent_listings = filter_all_listings(token)
-	return jsonify(
-		listings = agent_listings
-	)
+	if request.method == 'GET':
+		agent_listings = filter_all_listings(token)
+		return jsonify(
+			listings = agent_listings
+		)
 
-@app.route('/<token>/city=<city>')
+			
+		
+@app.route('/<token>/city=<city>', methods = ['GET'])
 def city_search(token, city):
 	city_results = filter_city_listings(token, city)
 	return jsonify(
 		listings = city_results
 	)
 
-@app.route('/<token>/state=<state>')
+@app.route('/<token>/state=<state>', methods = ['GET'])
 def state_search(token, state):
 	state_results = filter_state_listings(token, state)
 	return jsonify(
@@ -35,14 +38,14 @@ def state_search(token, state):
 # 	return sqft
 #########################################
 
-@app.route('/<token>/bed=<bedroom_num>')
+@app.route('/<token>/bed=<bedroom_num>', methods = ['GET'])
 def bedroom_num_search(token,bedroom_num):
 	bedroom_results = filter_bedroom_listings(token, bedroom_num)
 	return jsonify(
 		listing = bedroom_results
 	)
 
-@app.route('/<token>/bath=<bathroom_num>')
+@app.route('/<token>/bath=<bathroom_num>', methods = ['GET'])
 def bathroom_num_search(token,bathroom_num):
 	bathroom_results = filter_bathroom_listings(token, bathroom_num)
 	return jsonify(
@@ -58,21 +61,21 @@ def bathroom_num_search(token,bathroom_num):
 #########################################
 
 #this is to filter by whether the listing is for sale or rent
-@app.route('/<token>/type=<type_>')
+@app.route('/<token>/type=<type_>', methods = ['GET'])
 def type_search(token, type_):
 	type_results = filter_type_listings(token, type_)
 	return jsonify(
 		listing = type_results
 	)
 
-@app.route('/<token>/avail=<availablity>')
+@app.route('/<token>/avail=<availablity>', methods = ['GET'])
 def availablity(token, availablity):
 	availablity_results = filter_availability_listings(token, availablity)
 	return jsonify(
 		listing = availablity_results
 	)
 
-@app.route('/<token>/add-listing')
+@app.route('/<token>/add-listing', methods=['POST'])
 def add_listing():
 	pass
 
