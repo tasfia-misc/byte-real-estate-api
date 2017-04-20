@@ -65,7 +65,8 @@ def filter_all_listings(token):
             "Bedrooms": result.num_of_bedrooms,
             "Bath": result.num_of_bathrooms,
             "Availablity": result.available_or_sold,
-            "Price": result.price
+            "Price": result.price,
+            "Type": result.rental_or_sale
         }
         all_listings.append(listing)
 
@@ -80,7 +81,8 @@ def filter_city_listings(token,city):
             "Bedrooms": result.num_of_bedrooms,
             "Bath": result.num_of_bathrooms,
             "Availablity": result.available_or_sold,
-            "Price": result.price
+            "Price": result.price,
+            "Type": result.rental_or_sale
         }
         all_listings.append(listing)
 
@@ -95,7 +97,8 @@ def filter_state_listings(token,state):
             "Bedrooms": result.num_of_bedrooms,
             "Bath": result.num_of_bathrooms,
             "Availablity": result.available_or_sold,
-            "Price": result.price
+            "Price": result.price,
+            "Type": result.rental_or_sale
         }
         all_listings.append(listing)
 
@@ -110,7 +113,8 @@ def filter_bedroom_listings(token, bedroom_num):
             "Bedrooms": result.num_of_bedrooms,
             "Bath": result.num_of_bathrooms,
             "Availablity": result.available_or_sold,
-            "Price": result.price
+            "Price": result.price,
+            "Type": result.rental_or_sale
         }
         all_listings.append(listing)
 
@@ -125,7 +129,8 @@ def filter_bathroom_listings(token, bathroom_num):
             "Bedrooms": result.num_of_bedrooms,
             "Bath": result.num_of_bathrooms,
             "Availablity": result.available_or_sold,
-            "Price": result.price
+            "Price": result.price,
+            "Type": result.rental_or_sale
         }
         all_listings.append(listing)
 
@@ -140,7 +145,8 @@ def filter_type_listings(token, type_):
             "Bedrooms": result.num_of_bedrooms,
             "Bath": result.num_of_bathrooms,
             "Availablity": result.available_or_sold,
-            "Price": result.price
+            "Price": result.price,
+            "Type": result.rental_or_sale
         }
         all_listings.append(listing)
 
@@ -155,7 +161,8 @@ def filter_availability_listings(token, availablity):
             "Bedrooms": result.num_of_bedrooms,
             "Bath": result.num_of_bathrooms,
             "Availablity": result.available_or_sold,
-            "Price": result.price
+            "Price": result.price,
+            "Type": result.rental_or_sale
         }
         all_listings.append(listing)
 

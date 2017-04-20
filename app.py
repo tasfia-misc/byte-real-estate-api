@@ -58,21 +58,21 @@ def bathroom_num_search(token,bathroom_num):
 #########################################
 
 #this is to filter by whether the listing is for sale or rent
-@app.route('/<token>/<type>')
+@app.route('/<token>/type=<type_>')
 def type_search(token, type_):
 	type_results = filter_type_listings(token, type_)
 	return jsonify(
 		listing = type_results
 	)
 
-@app.route('/<token>/<availablity>')
+@app.route('/<token>/avail=<availablity>')
 def availablity(token, availablity):
-	availablity_results = filter_type_listings(token, type_)
+	availablity_results = filter_availability_listings(token, availablity)
 	return jsonify(
 		listing = availablity_results
 	)
 
-@app.route('<token>/add-listing')
+@app.route('/<token>/add-listing')
 def add_listing():
 	pass
 
