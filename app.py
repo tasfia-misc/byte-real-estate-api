@@ -1,4 +1,3 @@
-
 from flask import render_template, request, jsonify
 from config import db, app
 from model import *
@@ -12,18 +11,18 @@ def agent_listings(token):
 
 @app.route('/<token>/city=<city>')
 def city_search(token, city):
-	city_results = filter_city_listings(token,city)	
+	city_results = filter_city_listings(token, city)
 	return jsonify(
 		listings = city_results
 	)
 
 @app.route('/<token>/state=<state>')
 def state_search(token, state):
-	state_results = filter_state_listings(token,state)	
+	state_results = filter_state_listings(token, state)
 	return jsonify(
 		listings = state_results
 	)
-########################################	
+########################################
 # holding off on price cux its annoying
 # @app.route('/token/price')
 # def price_search():
@@ -49,21 +48,33 @@ def bathroom_num_search(token,bathroom_num):
 	return jsonify(
 		listing = bathroom_results
 	)
-@app.route('/amenities')
-def amenities_num_search():
-	amenities_search = request.args.get('amenities')
-	return amenities_search
+
+########################################
+# don't think a search for this is necessary
+# @app.route('/amenities')
+# def amenities_num_search():
+# 	amenities_search = request.args.get('amenities')
+# 	return amenities_search
+#########################################
 
 #this is to filter by whether the listing is for sale or rent
-@app.route('/type')
-def type_search():
-	type = request.args.get('type')
-	return type
+@app.route('/<token>/<type>')
+def type_search(token, type_):
+	type_results = filter_type_listings(token, type_)
+	return jsonify(
+		listing = type_results
+	)
 
-@app.route('/availablity')
-def availablity():
-	availablity = request.args.get('availablity')
-	return availablity
+@app.route('/<token>/<availablity>')
+def availablity(token, availablity):
+	availablity_results = filter_type_listings(token, type_)
+	return jsonify(
+		listing = availablity_results
+	)
+
+@app.route('<token>/add-listing')
+def add_listing():
+	pass
 
 if __name__ == "__main__":
     app.run(debug=True)
