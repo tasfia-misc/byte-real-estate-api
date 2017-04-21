@@ -31,12 +31,20 @@ def add_listing(token):
 	return 'listing successfully added. check all listing or filter by [].'	
 			
 		
-@app.route('/<token>/city=<city>', methods = ['GET'])
-def city_search(token, city):
-	city_results = filter_city_listings(token, city)
-	return jsonify(
-		listings = city_results
-	)
+@app.route('/<token>', methods = ['PUT'])
+def grab_info(token):
+	updated_listing = {
+	'street_address': request.json['street_address'],
+	'price': request.json['price'],
+	'amenities': request.json['amenities'],
+	'description' : request.json['description'],
+	'rental_or_sale' : request.json['rental_or_sale'],
+	'available_or_sold': request.json['available_or_sold']
+	}
+	update_listing(token,updated_listing)
+	return 'listing successfully updated. check all listing or filter by [].'	
+
+@app.route('/<token>/update-')	
 
 @app.route('/<token>/state=<state>', methods = ['GET'])
 def state_search(token, state):
