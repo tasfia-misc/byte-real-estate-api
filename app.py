@@ -1,7 +1,6 @@
 from flask import render_template, request, jsonify
 from config import db, app
 from model import *
-import datetime
 import json
 
 @app.route('/<token>', methods = ['GET'])
@@ -23,9 +22,8 @@ def add_listing(token):
 	'num_of_bathrooms' : request.json['num_of_bathrooms'],
 	'amenities': request.json['amenities'],
 	'description' : request.json['description'],
-	'date_listed': datetime.datetime.now(),
 	'rental_or_sale' : request.json['rental_or_sale'],
-	'available or sold': request.json['available_or_sold'],
+	'available_or_sold': request.json['available_or_sold'],
 	'agent_token' : token,
 	'square_feet': request.json['square_feet']
 	}

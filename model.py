@@ -1,6 +1,7 @@
 from config import db
 from uuid import uuid4
 import json
+import datetime
 
 class Agents(db.Model):
     __tablename__ = 'agents'
@@ -172,12 +173,26 @@ def filter_availability_listings(token, availablity):
 
 
 def enter_new_listing(token, new_listing):
-    print('================')
     print(new_listing)
-    print('+++++++++++++++++++')
-    print(token)
-    pass
-    
+    new_address = new_listing['street_address']
+    new_city = new_listing['city']
+    new_state = new_listing['state']
+    new_zip = new_listing['zip']
+    new_price = new_listing['price']
+    new_sq_ft = new_listing['square_feet']
+    new_bedroom_num = new_listing['num_of_bedrooms']
+    new_bath_num = new_listing['num_of_bathrooms']
+    new_amenities = new_listing['amenities']
+    new_descript = new_listing['description']
+    new_date_listed = datetime.datetime.now()
+    new_rent_sale = new_listing['rental_or_sale']
+    new_avail = new_listing['available_or_sold']
+   
+    database_add = Listings(new_address,new_city,new_state,new_zip,new_price,new_sq_ft,new_bedroom_num,new_bath_num,new_amenities,new_descript,new_date_listed,new_rent_sale,new_avail,token)
+    db.session.add(database_add)
+    db.session.commit()
+
+
 # def enter_new_listing(token, new_listing):
 #     print(new_listing)
 
