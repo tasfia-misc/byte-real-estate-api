@@ -204,8 +204,12 @@ def update_listing(token,updated_listing):
     # updated_last_modified = datetime.datetime.now()
     updated_rent_sale = updated_listing['rental_or_sale']
     updated_avail = updated_listing['available_or_sold']
-
-    # db.seesion.query.filter_by(street_address = address).update({})
-
-    db.update(Listings).values(price = '20',amenities=updated_amenities, description=updated_descript,last_update=datetime.datetime.now(), rental_or_sale=updated_rent_sale, available_or_sold=updated_avail).where(Listings.street_address == address)
+ 
+    Listings.query.filter_by(street_address = address).update({
+        'price': updated_price,
+        'amenities':updated_amenities,
+        'description':updated_descript,
+        'rental_or_sale':updated_rent_sale,
+        'available_or_sold':updated_avail
+        })
     db.session.commit()
