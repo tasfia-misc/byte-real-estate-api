@@ -2,6 +2,7 @@ from flask import render_template, request, jsonify
 from config import db, app
 from model import *
 import datetime
+import json
 
 @app.route('/<token>', methods = ['GET'])
 def agent_listings(token):
@@ -28,10 +29,8 @@ def add_listing(token):
 	'agent_token' : token,
 	'square_feet': request.json['square_feet']
 	}
-	return jsonify({
-	"new_listing" :  new_listing
-	})
-		
+	enter_new_listing(token,new_listing)
+	return 'listing successfully added. check all listing or filter by [].'	
 			
 		
 @app.route('/<token>/city=<city>', methods = ['GET'])

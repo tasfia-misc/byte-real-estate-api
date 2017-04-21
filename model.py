@@ -1,5 +1,6 @@
 from config import db
 from uuid import uuid4
+import json
 
 class Agents(db.Model):
     __tablename__ = 'agents'
@@ -167,3 +168,20 @@ def filter_availability_listings(token, availablity):
         all_listings.append(listing)
 
     return all_listings
+
+
+
+def enter_new_listing(token, new_listing):
+    print('================')
+    print(new_listing)
+    print('+++++++++++++++++++')
+    print(token)
+    pass
+    
+# def enter_new_listing(token, new_listing):
+#     print(new_listing)
+
+
+    # listing_to_add = b.decode(new_listing)
+    # listing_to_add = json.load(listing_to_add)
+    # print(listing_to_add)
