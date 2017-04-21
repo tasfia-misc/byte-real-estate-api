@@ -1,22 +1,52 @@
 from flask import render_template, request, jsonify
 from config import db, app
 from model import *
+import json
 
-@app.route('/<token>')
+@app.route('/<token>', methods = ['GET'])
 def agent_listings(token):
-	agent_listings = filter_all_listings(token)
-	return jsonify(
-		listings = agent_listings
-	)
+	if request.method == 'GET':
+		agent_listings = filter_all_listings(token)
+		return jsonify(
+			listings = agent_listings
+		)
+@app.route('/<token>', methods = ['POST'])		
+def add_listing(token):	
+	new_listing = {
+	'street_address': request.json['street_address'],
+	'city' : request.json['city'],
+	'state': request.json['state'],
+	'zip' : request.json['zip'],
+	'price': request.json['price'],
+	'num_of_bedrooms': request.json['num_of_bedrooms'],
+	'num_of_bathrooms' : request.json['num_of_bathrooms'],
+	'amenities': request.json['amenities'],
+	'description' : request.json['description'],
+	'rental_or_sale' : request.json['rental_or_sale'],
+	'available_or_sold': request.json['available_or_sold'],
+	'agent_token' : token,
+	'square_feet': request.json['square_feet']
+	}
+	enter_new_listing(token,new_listing)
+	return 'listing successfully added. check all listing or filter by [].'	
+			
+		
+@app.route('/<token>', methods = ['PUT'])
+def grab_info(token):
+	updated_listing = {
+	'street_address': request.json['street_address'],
+	'price': request.json['price'],
+	'amenities': request.json['amenities'],
+	'description' : request.json['description'],
+	'rental_or_sale' : request.json['rental_or_sale'],
+	'available_or_sold': request.json['available_or_sold']
+	}
+	update_listing(token,updated_listing)
+	return 'listing successfully updated. check all listing or filter by [].'	
 
-@app.route('/<token>/city=<city>')
-def city_search(token, city):
-	city_results = filter_city_listings(token, city)
-	return jsonify(
-		listings = city_results
-	)
+@app.route('/<token>/update-')	
 
-@app.route('/<token>/state=<state>')
+@app.route('/<token>/state=<state>', methods = ['GET'])
 def state_search(token, state):
 	state_results = filter_state_listings(token, state)
 	return jsonify(
@@ -35,14 +65,14 @@ def state_search(token, state):
 # 	return sqft
 #########################################
 
-@app.route('/<token>/bed=<bedroom_num>')
+@app.route('/<token>/bed=<bedroom_num>', methods = ['GET'])
 def bedroom_num_search(token,bedroom_num):
 	bedroom_results = filter_bedroom_listings(token, bedroom_num)
 	return jsonify(
 		listing = bedroom_results
 	)
 
-@app.route('/<token>/bath=<bathroom_num>')
+@app.route('/<token>/bath=<bathroom_num>', methods = ['GET'])
 def bathroom_num_search(token,bathroom_num):
 	bathroom_results = filter_bathroom_listings(token, bathroom_num)
 	return jsonify(
@@ -58,23 +88,20 @@ def bathroom_num_search(token,bathroom_num):
 #########################################
 
 #this is to filter by whether the listing is for sale or rent
-@app.route('/<token>/<type>')
+@app.route('/<token>/type=<type_>', methods = ['GET'])
 def type_search(token, type_):
 	type_results = filter_type_listings(token, type_)
 	return jsonify(
 		listing = type_results
 	)
 
-@app.route('/<token>/<availablity>')
+@app.route('/<token>/avail=<availablity>', methods = ['GET'])
 def availablity(token, availablity):
-	availablity_results = filter_type_listings(token, type_)
+	availablity_results = filter_availability_listings(token, availablity)
 	return jsonify(
 		listing = availablity_results
 	)
 
-@app.route('<token>/add-listing')
-def add_listing():
-	pass
 
 if __name__ == "__main__":
     app.run(debug=True)
