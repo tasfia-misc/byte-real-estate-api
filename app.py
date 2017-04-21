@@ -44,7 +44,13 @@ def grab_info(token):
 	update_listing(token,updated_listing)
 	return 'listing successfully updated. check all listing or filter by [].'	
 
-@app.route('/<token>/update-')	
+@app.route('/<token>', methods = ['DELETE'])
+def delete_listing(token):
+	unvailable_listing = {
+	'street_address':request.json['street_address']
+	}
+	remove_listing(token,unvailable_listing)
+	return('listing successfully removed')
 
 @app.route('/<token>/state=<state>', methods = ['GET'])
 def state_search(token, state):

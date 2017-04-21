@@ -213,3 +213,15 @@ def update_listing(token,updated_listing):
         'available_or_sold':updated_avail
         })
     db.session.commit()
+
+def remove_listing(token,unavailable_listing):
+    address = unavailable_listing['street_address']
+
+    Listings.query.filter_by(street_address = address).update({
+        'price': "NONE",
+        'amenities':"NONE",
+        'description':"NONE",
+        'rental_or_sale':"NONE",
+        'available_or_sold':"NONE"
+        })
+    db.session.commit()    
